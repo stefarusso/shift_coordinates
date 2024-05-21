@@ -33,6 +33,8 @@ s= float(input('Max displacment\n'))
 step= int(input('Number of steps\n'))
 s=s/step
 
+box_length=float(input('Length of the box [A] \n'))
+
 
 if(not s==0):
 	#origin
@@ -142,16 +144,16 @@ for j in range(step):
 	with open(filename_sapt, 'a') as f:
 		f.write("units angstrom\nno_reorient\nsymmetry c1\n}\nset basis 6-311G\nenergy('sapt0')\n")
 	
-	# XYZ -> GRO
-	import glob
-	for filename in glob.glob('./*.xyz'):
-                f=filename.split(".")
-                f.pop()
-                f='.'.join(str(i) for i in f)
-                xyz2gro.convert("topol.top",f+".xyz",f+".gro")
+#	# XYZ -> GRO
+#	import glob
+#	for filename in glob.glob('./*.xyz'):
+#                f=filename.split(".")
+#                f.pop()
+#                f='.'.join(str(i) for i in f)
+#                xyz2gro.convert(box_length,"topol.top",f+".xyz",f+".gro")
+	
 
 	#START SAPT
-	
 	#cmd=["psi4",filename_sapt,f'{filename_sapt}.psi']
 	#psi_out = subprocess.run(cmd, stdout=subprocess.PIPE)
 	
@@ -159,4 +161,14 @@ for j in range(step):
 	
 	
 	d=d+s/2
-	D=D+s			
+	D=D+s
+
+import glob
+for filename in glob.glob('./*.xyz'):
+        f=filename.split(".")
+        f.pop()
+        f='.'.join(str(i) for i in f)
+        xyz2gro.convert(box_length,"topol.top",f+".xyz",f+".gro")
+
+cmd=["../gromacs.sh"]
+out = subprocess.run(cmd, stdout=subprocess.PIPE)
