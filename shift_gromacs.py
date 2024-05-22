@@ -154,8 +154,8 @@ for j in range(step):
 	
 
 	#START SAPT
-	#cmd=["psi4",filename_sapt,f'{filename_sapt}.psi']
-	#psi_out = subprocess.run(cmd, stdout=subprocess.PIPE)
+	cmd=["psi4",filename_sapt,f'{filename_sapt}.psi']
+	psi_out = subprocess.run(cmd, stdout=subprocess.PIPE)
 	
 	
 	
